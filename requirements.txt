@@ -1,0 +1,13 @@
+torch>=2.0.0
+torch-geometric>=2.0.0
+numpy
+pandas
+scipy
+scikit-learn
+rdkit
+tqdm
+pyyaml
+click
+regex
+# Optional but recommended for faster tokenization if available
+# rxn-chemutils 
