@@ -1,4 +1,4 @@
-# SpecDiffMol
+﻿# SpecDiffMol
 
 SpecDiffMol is a multimodal spectrum-to-3D molecular conformation generation model that employs a two-stage strategy. It first predicts molecular SMILES from multimodal spectra via a Transformer-based model, followed by generating 3D conformations based on the predicted SMILES and spectral data using a diffusion-based model.
 
@@ -203,6 +203,17 @@ We provide preprocessed data for direct testing.
        --output_csv analysis_report.csv
    ```
 
+### Expected output
+
+For the demo pipeline, the expected artifacts are:
+- Stage 1 outputs include pred.txt, result.txt, results.csv, and metrics_report.txt.
+- Stage 2 outputs include inference_results.pkl and analysis_report.csv.
+
+### Expected run time 
+
+- Stage 1: Training is performed on a single NVIDIA A100 (80 GB) GPU and completes in approximately 8 hours.
+- Stage 2: Under the same environment setup, training completes in approximately 6 hours.
+
 ## Directory Structure
 
 ```
@@ -221,3 +232,4 @@ specdiffmol_code/
 ## License
 
 SpecDiffMol is released under the [MIT](LICENSE.txt) license.
+
