@@ -1,0 +1,65 @@
+# src/configs/new.yml (For finetuning)
+
+# 1. Explicitly specify training phase as 'finetune'
+training_phase: finetune
+
+model:
+  # --- Core Model Selection ---
+  network: dualenc_v4
+
+  # --- Geometric Backbone Parameters (Keep consistent with pretraining) ---
+  hidden_dim: 128
+  num_convs: 6
+  num_convs_local: 4
+  cutoff: 10.0
+  mlp_act: relu
+  edge_order: 3
+  edge_encoder: mlp
+  smooth_conv: false
+  
+  # --- Diffusion Process Parameters ---
+  beta_schedule: quad
+  beta_start: 1.e-7
+  beta_end: 2.e-3
+  num_diffusion_timesteps: 5000
+
+  # --- Spectroformer (Spectrum Encoder) Parameters ---
+  total_spec_len: 1200
+  spec_patch_size: 25
+  spec_embed_dim: 128
+  spec_num_heads: 4
+  spec_num_layers: 2
+  spec_num_concepts: 8
+
+train:
+  # 2. !! Add path to pretrained model !!
+  #    Change the path below to your actual best pretrained model checkpoint
+  pretrained_ckpt: 
+  num_workers: 2
+  seed: 2026
+  batch_size: 32
+  val_freq: 3000
+  max_iters: 200000             # Iterations for finetuning can be reduced
+  max_grad_norm: 1000.0
+  anneal_power: 2.0
+  
+  # KL divergence loss required during finetuning
+  kl_weight: 1.0e-4
+
+  optimizer:
+    type: adam
+    lr: 5.e-5                   # Finetuning usually uses smaller learning rate than pretraining
+    weight_decay: 0.
+    beta1: 0.95
+    beta2: 0.999
+  
+  scheduler:
+    type: cosine           
+    T_max: 200000        
+    eta_min: 1.0e-6  
+
+dataset:
+  # 3. Ensure dataset path points to your spectral dataset (qme14s)
+  train: ../../../example_data/step2_data/train.pkl
+  val: ../../../example_data/step2_data/test.pkl
+  test: ../../../example_data/step2_data/test.pkl

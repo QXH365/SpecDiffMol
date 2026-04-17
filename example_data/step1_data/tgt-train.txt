@@ -1,0 +1,7 @@
+C # C C S c 1 n n c s 1
+S = C C = C S
+O = C C C # C C ( O ) C = O
+C C 1 O C 2 C C C 2 C 1 O
+O = C C c 1 c o n c 1 O
+O = C ( Cl ) C C C Cl
+C C # C C C 1 C 2 C C 1 O 2

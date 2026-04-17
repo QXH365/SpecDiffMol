@@ -34,9 +34,9 @@ model:
 train:
   # 2. !! Add path to pretrained model !!
   #    Change the path below to your actual best pretrained model checkpoint
-  pretrained_ckpt: ./5000.pt
+  pretrained_ckpt: 
   num_workers: 2
-  seed: 2021
+  seed: 2026
   batch_size: 32
   val_freq: 3000
   max_iters: 200000             # Iterations for finetuning can be reduced
@@ -60,6 +60,6 @@ train:
 
 dataset:
   # 3. Ensure dataset path points to your spectral dataset (qme14s)
-  train: ../preprocess/qme14s_custom_split_without_fzs/train.pkl
-  val: ../preprocess/qme14s_custom_split_without_fzs/test.pkl
-  test: ../preprocess/qme14s_custom_split_without_fzs/test.pkl
+  train: ../preprocess/train.pkl
+  val: ../preprocess/val.pkl
+  test: ../preprocess/test.pkl
