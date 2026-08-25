@@ -1,0 +1,5 @@
+from .dualenc import SpectroformerIB as DualEncoderEpsNetwork_v4
+
+
+def get_model(config, training_phase="finetune"):
+    return DualEncoderEpsNetwork_v4(config, training_phase)
