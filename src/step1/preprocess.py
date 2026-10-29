@@ -213,10 +213,11 @@ def process_qme14s_files(
     return input_df
 
 
-def split_data(data: pd.DataFrame, seed: int) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """Split data into training and test sets."""
-    train, test = train_test_split(data, test_size=0.1, random_state=seed, shuffle=True)
-    return train, test
+def split_data(data: pd.DataFrame, seed: int) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Split data into training, validation and test sets in an 8:1:1 ratio."""
+    train_val, test = train_test_split(data, test_size=0.1, random_state=seed, shuffle=True)
+    train, val = train_test_split(train_val, test_size=1 / 9, random_state=seed, shuffle=True)
+    return train, val, test
 
 
 def save_set(data_set: pd.DataFrame, out_path: Path, set_type: str) -> None:
@@ -238,7 +239,7 @@ def save_set(data_set: pd.DataFrame, out_path: Path, set_type: str) -> None:
 
 
 def save_indices(data_set: pd.DataFrame, out_path: Path, set_type: str) -> None:
-    """Save file_id indices for training/test sets."""
+    """Save file_id indices for training/validation/test sets."""
     out_path.mkdir(parents=True, exist_ok=True)
     
     file_ids = list(data_set.file_id)
@@ -339,17 +340,19 @@ def main(
         
     print(f"Successfully processed {len(tokenised_data_df)} unique entries.")
 
-    train_set, test_set = split_data(tokenised_data_df, seed)
-    print(f"Split into {len(train_set)} training and {len(test_set)} test samples.")
+    train_set, val_set, test_set = split_data(tokenised_data_df, seed)
+    print(f"Split into {len(train_set)} training, {len(val_set)} validation and {len(test_set)} test samples.")
 
     out_data_path = out_path / "data"
     print(f"Saving files to {out_data_path}...")
     
     save_set(test_set, out_data_path, "test")
     save_set(train_set, out_data_path, "train")
+    save_set(val_set, out_data_path, "val")
     
     save_indices(test_set, out_data_path, "test")
     save_indices(train_set, out_data_path, "train")
+    save_indices(val_set, out_data_path, "val")
     
     print("\nPre-processing complete!")
 

@@ -40,8 +40,8 @@ def main(template_path: str, output_path: str, seed: int):
     tgt_test_path = os.path.join(data_path, 'tgt-test.txt')
     src_train_path = os.path.join(data_path, 'src-train.txt')
     tgt_train_path = os.path.join(data_path, 'tgt-train.txt')
-    src_val_path = os.path.join(data_path, 'src-test.txt') # using test as val for now
-    tgt_val_path = os.path.join(data_path, 'tgt-test.txt')
+    src_val_path = os.path.join(data_path, 'src-val.txt')
+    tgt_val_path = os.path.join(data_path, 'tgt-val.txt')
     
     # Create input yaml
     print('Creating input...')

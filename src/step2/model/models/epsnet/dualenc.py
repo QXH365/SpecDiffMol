@@ -309,10 +309,13 @@ class SpectroformerIB(nn.Module):
 
             score_pred = self._get_score_pred(batch, pos, t_tensor, w_global, global_start_sigma, clip, clip_local)
 
-            sigma_current_sq = sigmas[t_current] ** 2
+            sigma_current = sigmas[t_current]
+            sigma_current_sq = sigma_current ** 2
             sigma_next_sq = sigmas[t_next] ** 2
 
-            drift = 0.5 * (sigma_current_sq - sigma_next_sq) * score_pred
+            # The training target predicts sigma * score; recover the score for the ODE.
+            true_score = score_pred / sigma_current
+            drift = 0.5 * (sigma_current_sq - sigma_next_sq) * true_score
 
             pos = pos + drift
 
